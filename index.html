@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>16 · До дня рождения</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Nunito:wght@600;800&family=Pixelify+Sans:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffe9f1;--ink:#5a2540;--a1:#ff8eaf;--a2:#ffd1df;--a3:#ffe08a;--paper:#fffafc;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-weight:600;
+  display:flex;overflow-x:hidden;overflow-y:auto;transition:background .8s,color .8s;
+  background-image:radial-gradient(circle at 15% 10%,var(--a2) 0,transparent 45%),radial-gradient(circle at 90% 95%,var(--a3) 0,transparent 40%);
+  background-color:var(--bg)}
+main{position:relative;z-index:2;width:min(92vw,720px);text-align:center;padding:60px 0 90px;margin:auto}
+.chip{display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);font-size:14px;font-weight:800;box-shadow:3px 3px 0 var(--ink)}
+.dots{display:flex}.dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--ink);margin-left:-4px}.dots i:first-child{margin:0}
+h1{font-family:Unbounded,sans-serif;font-weight:800;margin:26px 0 0;line-height:.9;font-size:clamp(70px,18vw,130px);letter-spacing:-.04em;color:var(--a1);
+  -webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink);transform:rotate(-3deg)}
+h1.long{font-size:clamp(44px,12vw,92px);letter-spacing:-.03em;line-height:1;margin-top:34px}
+.sub{font-size:clamp(16px,3.6vw,20px);font-weight:800;margin:22px 0 26px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,2vw,16px)}
+.tile{background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:22px;padding:clamp(14px,3vw,22px) 4px clamp(10px,2vw,14px);box-shadow:4px 4px 0 var(--ink)}
+.tile:nth-child(odd){transform:rotate(-1.2deg)}.tile:nth-child(even){transform:rotate(1.2deg)}
+.num{font-family:Unbounded,sans-serif;font-weight:800;font-size:clamp(24px,6.4vw,46px);font-variant-numeric:tabular-nums;line-height:1}
+.lbl{margin-top:8px;font-size:clamp(11px,2.6vw,14px);font-weight:800;opacity:.65}
+.date{margin-top:28px;font-size:15px;font-weight:800;opacity:.8}
+.done{grid-column:1/-1;font-family:Unbounded,sans-serif;font-size:clamp(26px,6vw,46px);padding:30px 10px;line-height:1.15}
+.st{position:fixed;z-index:1;width:var(--s);height:var(--s);left:var(--x);top:var(--y);transform:rotate(var(--r));animation:bob 5s ease-in-out infinite;animation-delay:var(--d);pointer-events:none}
+@keyframes bob{50%{translate:0 -10px}}
+.hands{display:none;font-size:34px;margin-top:10px;gap:12px;justify-content:center}.six .hands{display:flex}
+.hands span{display:inline-block;animation:wave .8s ease-in-out infinite}.hands span+span{animation-delay:-.4s}
+@keyframes wave{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(16deg)}}
+.chip,h1,.tile{transition:background .8s,border-color .8s,box-shadow .8s,color .8s}
+/* ===== Стили оформления (тема Obsidian ниже их перекрывает) ===== */
+.st-glass .tile,.st-glass .word,.st-glass .chip,.st-glass .pick{background:color-mix(in srgb,var(--paper) 55%,transparent);border:1px solid color-mix(in srgb,var(--ink) 22%,transparent);box-shadow:0 10px 30px color-mix(in srgb,var(--ink) 14%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.st-glass .tile:nth-child(n),.st-glass .word{transform:none}
+.st-glass .tile{border-radius:26px}
+.st-glass h1{-webkit-text-stroke:0;text-shadow:0 10px 30px color-mix(in srgb,var(--a1) 55%,transparent);transform:none}
+
+.st-soft .tile,.st-soft .word,.st-soft .chip,.st-soft .pick{border:0;box-shadow:0 8px 0 color-mix(in srgb,var(--a1) 45%,transparent),0 14px 26px color-mix(in srgb,var(--ink) 12%,transparent)}
+.st-soft .tile:nth-child(n),.st-soft .word{transform:none}
+.st-soft .tile{border-radius:30px}
+.st-soft h1{-webkit-text-stroke:0;text-shadow:0 8px 0 var(--a2);transform:none}
+
+.st-pixel{font-family:"Pixelify Sans",Nunito,monospace}
+.st-pixel h1,.st-pixel .num,.st-pixel .done,.st-pixel .sheet h2{font-family:"Pixelify Sans",monospace;font-weight:700}
+.st-pixel .tile,.st-pixel .word,.st-pixel .chip,.st-pixel .pick,.st-pixel .opt{border-radius:0;border-width:3px;box-shadow:5px 5px 0 var(--ink)}
+.st-pixel .tile:nth-child(n),.st-pixel .word{transform:none}
+.st-pixel h1{transform:none;-webkit-text-stroke:0;text-shadow:5px 5px 0 var(--ink);letter-spacing:0}
+.st-pixel .sheet{border-radius:0}
+
+.st-comic::before,.st-note::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none}
+.st-comic::before{background-image:radial-gradient(color-mix(in srgb,var(--a1) 40%,transparent) 22%,transparent 24%);background-size:16px 16px;opacity:.55}
+.st-comic .tile,.st-comic .word,.st-comic .chip,.st-comic .pick{border-width:3px;box-shadow:6px 6px 0 var(--ink)}
+.st-comic .tile:nth-child(odd){transform:rotate(-2.4deg) skewX(-2deg)}
+.st-comic .tile:nth-child(even){transform:rotate(2deg) skewX(2deg)}
+.st-comic h1{-webkit-text-stroke:4px var(--ink);text-shadow:8px 8px 0 var(--ink);transform:rotate(-4deg) skewX(-6deg)}
+
+.st-note::before{background:linear-gradient(90deg,transparent 46px,color-mix(in srgb,#ff6b81 55%,transparent) 46px 48px,transparent 48px),repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--a1) 40%,transparent) 31px 32px)}
+.st-note .tile,.st-note .word,.st-note .chip{border-radius:6px;border-style:dashed;box-shadow:3px 3px 0 color-mix(in srgb,var(--ink) 30%,transparent)}
+.st-note .tile:nth-child(odd){transform:rotate(-2deg)}
+.st-note .tile:nth-child(even){transform:rotate(1.6deg)}
+.st-note h1{-webkit-text-stroke:2px var(--ink);text-shadow:3px 3px 0 var(--a2);transform:rotate(-2deg)}
+
+/* ===== Бит-секвенсор ===== */
+.pick.beat{left:14px;right:auto}
+.pop{position:fixed;z-index:9;margin-left:-14px;font-family:Unbounded,sans-serif;font-weight:800;font-size:18px;color:var(--ink);text-shadow:0 2px 0 var(--paper),0 0 8px var(--paper);pointer-events:none;animation:rise .9s ease-out forwards}
+@keyframes rise{to{transform:translateY(-54px);opacity:0}}
+.hb{font:inherit;font-weight:800;font-size:14px;color:var(--ink);background:var(--paper);border:2px solid var(--ink);border-radius:999px;padding:7px 13px;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
+.hb:active,.go:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.hb.on{background:var(--a1)}
+.hb.recording{background:#ff6b6b;color:#fff}
+.go{font:inherit;font-weight:800;font-size:16px;color:var(--ink);background:var(--a1);border:2px solid var(--ink);border-radius:999px;padding:9px 24px;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
+#beat{position:fixed;inset:0;z-index:8;display:none;overflow-y:auto;color:var(--ink);background-color:var(--bg);background-image:radial-gradient(circle at 15% 10%,var(--a2) 0,transparent 45%),radial-gradient(circle at 90% 95%,var(--a3) 0,transparent 40%);padding:calc(env(safe-area-inset-top,0px) + 14px) 10px calc(env(safe-area-inset-bottom,0px) + 24px)}
+#beat.open{display:block}
+.binner{max-width:560px;margin:0 auto}
+.bhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+#beat h3{margin:0;font-family:Unbounded,sans-serif;font-size:20px}
+.st-pixel #beat h3{font-family:"Pixelify Sans",monospace}
+.bhint{margin:14px 0 0;font-size:13px;opacity:.7;line-height:1.5}
+.blab{font-size:12px;font-weight:800;opacity:.65;margin:12px 0 6px}
+.bctl,.bpre{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.bsl{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 6px}
+.bsl label{display:block;font-size:13px;font-weight:800}
+.bsl input[type=range]{width:100%;accent-color:var(--a1);margin:6px 0 0}
+.bsl select{width:100%;margin-top:6px;font:inherit;font-weight:800;font-size:13px;padding:8px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);color:var(--ink)}
+.bdet{margin-top:14px;border:2px solid var(--ink);border-radius:16px;padding:10px 12px;background:var(--paper)}
+.bdet summary{font-weight:800;cursor:pointer}
+#brows{touch-action:none;user-select:none;-webkit-user-select:none;margin-top:10px}
+.brow{display:flex;gap:2px;align-items:center;margin-bottom:4px}
+.blbl{width:36px;flex:none;font:inherit;font-size:11px;font-weight:800;text-align:left;color:inherit;background:none;border:0;padding:0;cursor:pointer;opacity:.85}
+.brow.mute .blbl{opacity:.3;text-decoration:line-through}
+.brow.mute .cell{opacity:.3}
+.cell{flex:1;min-width:0;height:28px;padding:0;border-radius:5px;border:2px solid color-mix(in srgb,var(--ink) 30%,transparent);background:var(--paper);cursor:pointer}
+.cell.b4{margin-left:3px}
+.cell.on{border-color:var(--ink)}
+.cell.acc{box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--paper) 60%,transparent)}
+.r-d .cell.on{background:var(--a1)}
+.r-b .cell.on{background:var(--a3)}
+.r-m .cell.on{background:color-mix(in srgb,var(--a1) 55%,var(--ink))}
+.cell.cur{transform:scaleY(1.12);border-color:var(--ink)}
+.cell.cur:not(.on){background:var(--a2)}
+@media (prefers-reduced-motion:reduce){.st,.hands span,.ticker div{animation:none}}
+.obs .tile,.obs .word,.obs .chip,.obs .pick{background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.03));border:1px solid rgba(220,200,255,.26);box-shadow:0 10px 36px rgba(110,70,220,.26),inset 0 1px 0 rgba(255,255,255,.2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transform:none}
+.obs .tile{border-radius:26px}
+.obs h1{-webkit-text-stroke:0;text-shadow:none;transform:none;color:transparent;background:linear-gradient(180deg,#fbf2ff 5%,#c9a6ff 55%,#ff9fd6 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 26px rgba(170,120,255,.55))}
+.obs .ticker{background:rgba(10,8,18,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid rgba(220,200,255,.22)}
+.obs .st{opacity:.7}
+.obs .num{color:#f6efff}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.word{margin:26px auto 0;max-width:520px;padding:16px 20px;background:var(--paper);border:2px solid var(--ink);border-radius:22px;box-shadow:4px 4px 0 var(--ink);transform:rotate(.6deg)}
+.word b{display:block;font-size:13px;opacity:.65;margin-bottom:6px}
+.word p{margin:0;font-size:clamp(16px,3.8vw,20px);font-weight:800;line-height:1.35}
+.ticker{position:fixed;left:0;right:0;bottom:0;z-index:3;background:var(--paper);border-top:2px solid var(--ink);overflow:hidden;white-space:nowrap;padding-bottom:env(safe-area-inset-bottom,0px)}
+.ticker div{display:inline-block;padding:11px 0;font-weight:800;font-size:15px;animation:roll 70s linear infinite}
+.ticker span{margin:0 16px}
+@keyframes roll{to{transform:translateX(-50%)}}
+.pick{position:fixed;right:14px;top:calc(env(safe-area-inset-top,0px) + 14px);z-index:5;font:inherit;font-weight:800;font-size:14px;color:var(--ink);background:var(--paper);border:2px solid var(--ink);border-radius:999px;padding:8px 16px;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
+.pick:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.panel{position:fixed;inset:0;z-index:6;background:rgba(0,0,0,.38);display:none;align-items:flex-end;justify-content:center}
+.panel.open{display:flex}
+.sheet{width:min(100%,660px);max-height:82%;overflow:auto;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:26px 26px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.sheet h2{margin:0 0 4px;font-family:Unbounded,sans-serif;font-size:18px}
+.sheet p{margin:0 0 14px;font-size:14px;opacity:.7}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.opt{font:inherit;font-weight:800;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px;padding:10px;border:2px solid var(--ink);border-radius:16px;background:var(--bg);color:var(--ink);cursor:pointer}
+.opt.on{box-shadow:3px 3px 0 var(--ink);background:var(--a2)}
+.opt .dots i{width:12px;height:12px}
+.pick:focus-visible,.opt:focus-visible{outline:3px solid var(--a1);outline-offset:2px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21C5 15.5 2.5 12 2.5 8.3 2.5 5.4 4.6 3.5 7 3.5c2 0 3.8 1.2 5 3 1.2-1.8 3-3 5-3 2.4 0 4.5 1.9 4.5 4.8 0 3.700-2.500 7.200-9.500 12.700z" fill="currentColor" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="sparkle" viewBox="0 0 24 24"><path d="M12 2c.8 5.500 4.500 9.200 10 10-5.500.8-9.200 4.500-10 10-.8-5.500-4.500-9.200-10-10 5.500-.8 9.200-4.500 10-10z" fill="currentColor" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="star" viewBox="0 0 24 24"><path d="M12 2.500l2.900 6.200 6.800.8-5 4.700 1.300 6.700L12 17.500 6 20.900l1.300-6.700-5-4.700 6.800-.8z" fill="currentColor" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="flower" viewBox="0 0 24 24"><g fill="currentColor" stroke="var(--ink)" stroke-width="1.6"><circle cx="12" cy="6" r="4"/><circle cx="18" cy="11" r="4"/><circle cx="16" cy="18" r="4"/><circle cx="8" cy="18" r="4"/><circle cx="6" cy="11" r="4"/></g><circle cx="12" cy="12.500" r="3.200" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.600"/></symbol>
+  <symbol id="cloud" viewBox="0 0 24 24"><path d="M7 18a4.500 4.500 0 0 1-.6-8.960A6 6 0 0 1 18 10.500a3.800 3.800 0 0 1-.5 7.500z" fill="currentColor" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.500A8.500 8.500 0 0 1 9.500 4a8.500 8.500 0 1 0 10.500 10.500z" fill="currentColor" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="diamond" viewBox="0 0 24 24"><path d="M12 2l8 10-8 10L4 12z" fill="currentColor" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.500" fill="currentColor" fill-opacity=".45" stroke="var(--ink)" stroke-width="1.6"/><path d="M8 9a5 5 0 0 1 4-2.500" fill="none" stroke="var(--paper)" stroke-width="1.800" stroke-linecap="round"/></symbol>
+  <symbol id="bow" viewBox="0 0 24 24"><path d="M12 12C7 4 1.500 6.500 3 12c-1.500 5.500 4 8 9 0 5 8 10.500 5.500 9-0 1.500-5.500-4-8-9 0z" fill="currentColor" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.200" fill="currentColor" stroke="var(--ink)" stroke-width="1.600"/></symbol>
+</svg>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+<div id="stickers" aria-hidden="true"></div>
+<button class="pick" id="pick" type="button">Темы и стили</button>
+<button class="pick beat" id="bt" type="button">🎵 Бит</button>
+<div id="beat" role="dialog" aria-label="Бит-секвенсор"><div class="binner">
+  <div class="bhead"><h3>Бит-секвенсор</h3><button class="hb" id="bq" type="button" aria-label="Закрыть">✕</button></div>
+  <div class="bctl"><button class="go" id="bplay" type="button">▶ Играть</button><button class="hb" id="brec" type="button">⏺ Запись</button><button class="hb" id="btap" type="button">Тап-темп</button></div>
+  <div class="bsl"><label>Темп: <span id="bpmv">100</span><input type="range" id="bpm" min="60" max="180" value="100"></label><label>Свинг<input type="range" id="swing" min="0" max="60" value="0"></label></div>
+  <div class="blab">Паттерн</div>
+  <div class="bctl" id="bslots"><button class="hb" type="button" data-s="0">A</button><button class="hb" type="button" data-s="1">B</button><button class="hb" type="button" data-s="2">C</button><button class="hb" type="button" data-s="3">D</button><button class="hb" type="button" id="bdup">⧉ Копия</button><button class="hb" type="button" id="bchain">Цепочка</button></div>
+  <div class="blab">Готовые биты</div>
+  <div class="bpre" id="bpre"></div>
+  <div class="bsl">
+    <label>Набор звуков<select id="kit"></select></label>
+    <label>Звук мелодии<select id="lead"></select></label>
+    <label>Тональность<select id="root"></select></label>
+    <label>Лад<select id="scale"></select></label>
+  </div>
+  <div class="blab">Рисовать</div>
+  <div class="bctl"><button class="hb on" type="button" id="bm1">Обычно</button><button class="hb" type="button" id="bm2">Громко</button><button class="hb" type="button" id="bclear">Очистить</button><button class="hb" type="button" id="brand">Случайно</button></div>
+  <div id="brows"></div>
+  <details class="bdet"><summary>Микшер и эффекты</summary>
+    <div class="bsl">
+      <label>Барабаны<input type="range" id="v_d" min="0" max="100" value="90"></label>
+      <label>Бас<input type="range" id="v_b" min="0" max="100" value="90"></label>
+      <label>Мелодия<input type="range" id="v_m" min="0" max="100" value="80"></label>
+      <label>Эхо<input type="range" id="fx_echo" min="0" max="100" value="25"></label>
+      <label>Реверб<input type="range" id="fx_reverb" min="0" max="100" value="20"></label>
+      <label>Фильтр<input type="range" id="fx_filter" min="0" max="100" value="100"></label>
+    </div>
+  </details>
+  <details class="bdet"><summary>Поделиться</summary>
+    <div class="bctl" style="margin-top:10px"><button class="hb" type="button" id="bcopy">Скопировать код</button><button class="hb" type="button" id="bpaste">Вставить код</button></div>
+  </details>
+  <p class="bhint">Тап по названию дорожки выключает её звук. «Громко» рисует акценты. «Цепочка» играет паттерны A, B, C, D по кругу (пустые пропускаются). «Запись» сохраняет звук в файл.</p>
+</div></div>
+<div class="panel" id="panel"><div class="sheet" role="dialog" aria-label="Выбор темы">
+  <h2>Стиль</h2><p>Как выглядят карточки и цифры. «Стиль дня» тоже меняется каждый день.</p>
+  <div class="opts" id="styleOpts"></div>
+  <h2 style="margin-top:22px">Тема</h2><p>Тема дня каждый день новая: свои цвета, фигурки и эффект. Ниже можно выбрать любую из готовых.</p>
+  <div class="opts" id="opts"></div>
+</div></div>
+
+<main>
+  <div class="chip"><span class="dots" id="dots"></span><span id="theme"></span></div>
+  <h1 id="title">16</h1>
+  <div class="hands" id="hands"><span>👋</span><span>👋</span></div>
+  <p class="sub" id="sub">до дня рождения осталось</p>
+  <section class="grid" id="grid">
+    <div class="tile big"><div class="num" id="d">000</div><div class="lbl" id="ld">дней</div></div>
+    <div class="tile"><div class="num" id="h">00</div><div class="lbl" id="lh">часов</div></div>
+    <div class="tile"><div class="num" id="m">00</div><div class="lbl" id="lm">минут</div></div>
+    <div class="tile"><div class="num" id="s">00</div><div class="lbl" id="ls">секунд</div></div>
+  </section>
+  <div class="date">12 декабря 2026</div>
+  <div class="word"><b>Слово дня</b><p id="word"></p></div>
+</main>
+<div class="ticker" aria-hidden="true"><div id="roll"></div></div>
+
+<script>
+const target = new Date("2026-12-12T00:00:00+05:00").getTime();
+
+const obsidianBg = "radial-gradient(ellipse 90% 55% at 50% -8%, rgba(150,105,235,.50), transparent 70%), radial-gradient(ellipse 60% 40% at 100% 100%, rgba(255,150,215,.20), transparent 70%), radial-gradient(ellipse 50% 35% at 0% 85%, rgba(110,80,220,.22), transparent 70%)";
+
+// [название, фон, контур, акцент 1, акцент 2, акцент 3, фигурки, цвет плиток]
+const themes = [
+  ["SIX SEVEN 💀","#fff3a8","#29251b","#ff5c35","#ffe06b","#ff9ec4",["star","sparkle","star","sparkle"]],
+  ["Клубничное молочко","#ffe9f1","#5a2540","#ff8eaf","#ffd1df","#ffe08a",["heart","sparkle","heart","star"]],
+  ["Облачная конфетка","#eaf5ff","#2f4766","#8cc6ff","#d8edff","#e4d5ff",["cloud","sparkle","heart","cloud"]],
+  ["Лавандовый сон","#f1ebff","#463a66","#b59ae8","#dfd1ff","#f7c8e5",["moon","sparkle","heart","star"]],
+  ["Мятный поп","#e6fff6","#245247","#6fd8b8","#c9f5e7","#e3f5a8",["flower","heart","sparkle","flower"]],
+  ["Персиковый десерт","#fff0df","#6a3f30","#ffa57a","#ffd9c3","#ffe5a9",["flower","heart","sparkle","star"]],
+  ["Ночное сердечко","#1a1730","#f3ecff","#c7a6ff","#3c3470","#8b4a86",["moon","star","heart","sparkle"],"#2a2646"],
+  ["Желейная радуга","#fff8ea","#5a4638","#f29cc9","#ffe0ef","#bfe6ff",["cloud","heart","star","sparkle"]],
+  ["Золотая сцена","#fff7dc","#5a4318","#efb93c","#f8e6a9","#ffd0c5",["star","sparkle","star","heart"]],
+  ["Плюшевый мишка","#f8eee7","#5d4033","#c99b7e","#ead5c6","#f4d7df",["heart","cloud","flower","sparkle"]],
+  ["Сахарная вишня","#fff0f2","#66283a","#e0607d","#ffd1da","#e9c7ff",["heart","sparkle","heart","flower"]],
+  ["Морская карамель","#e9fbff","#2c5058","#66c6d2","#c7f0f3","#ffe0b8",["cloud","sparkle","star","heart"]],
+  ["Цветочный дневник","#f5f0e8","#4e4a3a","#a9b779","#dfe7c5","#f0c9d9",["flower","heart","flower","sparkle"]],
+  ["Арбузный лимонад","#fff0f0","#5c2a33","#ff6b81","#ffd3d9","#b8f0c0",["heart","flower","sparkle","star"]],
+  ["Сладкая слива","#f6e9f5","#4d2a52","#c56fcf","#efcdf2","#ffd9a8",["heart","star","sparkle","heart"]],
+  ["Лимонный пирог","#fffbd9","#5a5016","#f2cf3a","#fff0a0","#ffd0e0",["star","flower","sparkle","heart"]],
+  ["Космическая карамель","#12162e","#e6f0ff","#7fd0ff","#2a3566","#ff9ad5",["moon","star","sparkle","star"],"#222a52"],
+  ["Зефирное небо","#fdeaf6","#5a3050","#ff9fd6","#e3d3ff","#bfe9ff",["cloud","heart","sparkle","cloud"]],
+  ["Кофе с молоком","#f4e8dc","#4a3326","#b98560","#e8d2bc","#f6c9d0",["heart","cloud","star","flower"]],
+  ["Зелёное яблоко","#f0ffe0","#2f4d1c","#8fd14f","#d6f5b0","#ffe48a",["flower","star","heart","sparkle"]],
+  ["Бабл-гам","#ffe3f4","#6a1f50","#ff4fa8","#ffc2e4","#a8e8ff",["heart","sparkle","star","heart"]],
+  ["Сакура","#fff1f5","#5e3040","#ffa3bd","#ffd9e4","#fff0b8",["flower","sparkle","flower","heart"]],
+  ["Ягодная ночь","#241226","#ffe6f2","#ff7eb6","#54285a","#ffc86b",["heart","star","moon","sparkle"],"#3a1c40"],
+  ["Синий лёд","#e9f0ff","#26366b","#6f8cff","#cbd8ff","#ffd6f0",["star","sparkle","cloud","heart"]],
+  ["Апельсиновая шипучка","#fff1dc","#6a3510","#ff9a2e","#ffd9a8","#ffc4d6",["flower","star","heart","sparkle"]],
+  ["Розовый закат","#ffe8e0","#5e2a3a","#ff7f8f","#ffc7a8","#d9b8ff",["heart","cloud","sparkle","star"]],
+  ["Obsidian","#0a0812","#efe6ff","#b99cff","#3b2766","#ff9fd6",["bow","flower","sparkle","heart"],"#1b1a22","stars",obsidianBg],
+  ["Клубничный чизкейк","#fff4ef","#5b2a35","#ff8f9d","#ffe0d9","#fff1b8",["heart","flower","sparkle","heart"]],
+  ["Лаймовая содовая","#f3ffd9","#2f4a14","#a6e22e","#e1f8a8","#bff5e6",["star","sparkle","flower","cloud"],undefined,"bubbles"],
+  ["Тёмный шоколад","#1f1512","#ffe9d6","#e8a87c","#4a2f26","#c9809a",["heart","star","flower","sparkle"],"#33231e","confetti"],
+  ["Северное сияние","#0e1f2b","#e3fff4","#6ff2c0","#1f4a5c","#b79bff",["star","moon","sparkle","cloud"],"#173444","stars"],
+  ["Виноградная газировка","#f0e8ff","#3d2a6b","#9b6ff0","#d9c8ff","#ffc2e8",["flower","heart","star","sparkle"],undefined,"bubbles"],
+  ["Ванильное небо","#fffbea","#5a4a2a","#ffd36b","#fff0bd","#cfe9ff",["cloud","star","sparkle","heart"]],
+  ["Малиновый йогурт","#fff0f6","#5e1f3e","#ee4f8f","#ffcfe3","#ffe7a3",["heart","flower","heart","sparkle"],undefined,"hearts"],
+  ["Лунный чай","#16202e","#e8f2ff","#9ec9ff","#2c3f5e","#ffd9a0",["moon","cloud","star","sparkle"],"#223148","stars"],
+  ["Неон-аркада","#0d0a1f","#f4f0ff","#39f5c8","#2a1f5c","#ff4fb8",["star","diamond","sparkle","diamond"],"#1b1440","fireworks"],
+  ["Пудровая роза","#fbeeec","#58343a","#e39aa6","#f6d6d8","#e8d9c4",["flower","heart","ring","sparkle"],undefined,"petals"],
+  ["Голубая лагуна","#e2f9ff","#134658","#2cc4e0","#bdeef7","#fff0a8",["cloud","ring","sparkle","star"],undefined,"bubbles"],
+  ["Тыквенный латте","#fff0dd","#5b3213","#f08a24","#ffd8ae","#e8c7a0",["flower","star","heart","cloud"],undefined,"petals"],
+  ["Кислые мишки","#f2ffe8","#2d4a1f","#ff6f6f","#c8f5a0","#ffe36b",["heart","star","flower","diamond"],undefined,"confetti"],
+  ["Фиалковый сад","#f4eefc","#40306a","#b28be8","#e3d3f8","#c9f0d8",["flower","sparkle","flower","heart"],undefined,"petals"],
+  ["Кибер-сакура","#1a0f24","#ffeaf6","#ff7fc4","#4a1f5c","#7fe8ff",["flower","diamond","sparkle","heart"],"#2c1740","petals"],
+  ["Мармеладный закат","#fff1e6","#5e2d2d","#ff7a59","#ffd0b5","#ffb8d9",["sparkle","heart","cloud","star"],undefined,"confetti"]
+];
+
+const words = [
+  "Ты уже делаешь мир ярче просто тем, что в нём есть.",
+  "У тебя красивая улыбка, и она заразительна.",
+  "Ты умнее, чем думаешь, и смелее, чем кажется.",
+  "Рядом с тобой людям становится теплее.",
+  "Не спеши взрослеть: у тебя всё получается в своём темпе.",
+  "Твои идеи стоят того, чтобы их попробовать.",
+  "Тебе не нужно быть идеальной, чтобы тебя любили.",
+  "Сегодня хороший день, чтобы собой гордиться.",
+  "Ты умеешь удивлять, и это настоящий талант.",
+  "У тебя доброе сердце. Береги его.",
+  "Всё, что ты любишь, делает тебя особенной.",
+  "Ты способна на большее, чем сама позволяешь себе мечтать.",
+  "Пусть сегодня найдётся хотя бы одна причина улыбнуться.",
+  "Твой смех — лучшая музыка.",
+  "Ты сильнее самых трудных дней.",
+  "Быть собой — это уже круто.",
+  "Тебя ждёт много хорошего, просто оно ещё в пути.",
+  "Ты важна, даже когда так не кажется.",
+  "Спасибо, что ты именно такая.",
+  "Пусть любимые песни звучат громче любых забот.",
+  "Ты умеешь находить красоту в мелочах.",
+  "Твоё время расцветать уже наступило.",
+  "Ты заслуживаешь самого тёплого праздника.",
+  "Не бойся мечтать вслух.",
+  "Ты вдохновляешь больше, чем замечаешь.",
+  "Каждый день до праздника — шаг к чему-то классному.",
+  "Получится всё, за что ты возьмёшься с душой.",
+  "Ты яркая, как лучший хит в плейлисте.",
+  "Отдыхай, если устала. Это тоже часть пути.",
+  "Шестнадцать — только начало большого приключения."
+];
+
+// Тема и слово дня зависят только от числа оставшихся дней
+function pick(day){
+  if(day === 67) return 0;
+  const x = Math.sin(day * 12.9898 + 78.233) * 43758.5453;
+  return 1 + Math.floor((x - Math.floor(x)) * (themes.length - 1));
+}
+
+const spots = [["4%","8%","54px","-12deg","0s"],["86%","10%","44px","14deg","-1.5s"],["8%","72%","50px","8deg","-3s"],
+  ["88%","68%","58px","-10deg","-2s"],["22%","90%","36px","16deg","-4s"],["72%","4%","34px","-6deg","-.8s"]];
+
+function plural(n, f){
+  const a = n % 100, b = n % 10;
+  return (a > 10 && a < 20) ? f[2] : b === 1 ? f[0] : (b > 1 && b < 5) ? f[1] : f[2];
+}
+const $ = id => document.getElementById(id);
+const dots = t => [3,4,5].map(i => `<i style="background:${t[i]}"></i>`).join("");
+
+const fxs = ["fireworks","hearts","confetti","bubbles","stars","petals"];
+const fxn = {fireworks:"салют",hearts:"сердечки",confetti:"конфетти",bubbles:"пузырьки",stars:"звёзды",petals:"лепестки"};
+const nouns = [["лето",2],["облако",2],["зефир",0],["мармелад",0],["конфетти",2],["карамель",1],["сорбет",0],["фейерверк",0],["рассвет",0],["пирожное",2],["лимонад",0],["мороженое",2]];
+const adjs = [["розовый","розовая","розовое"],["сладкий","сладкая","сладкое"],["звёздный","звёздная","звёздное"],["пушистый","пушистая","пушистое"],["сияющий","сияющая","сияющее"],["нежный","нежная","нежное"],["волшебный","волшебная","волшебное"],["солнечный","солнечная","солнечное"],["игривый","игривая","игривое"],["хрустальный","хрустальная","хрустальное"],["тёплый","тёплая","тёплое"],["лунный","лунная","лунное"]];
+const allShapes = ["heart","sparkle","star","flower","cloud","moon","diamond","ring"];
+
+// Новая тема на каждый день: цвет, название, фигурки и эффект получаются из числа дня,
+// поэтому комбинации не повторяются минимум 144 дня подряд
+function gen(day){
+  let a = day * 9973 + 7;
+  const r = () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const h = (day * 137.508) % 360, dark = r() < .25;
+  const c = (x, sat, l) => `hsl(${Math.round(((x % 360) + 360) % 360)},${sat}%,${l}%)`;
+  const k = (day * 37 + 5) % 144, n = nouns[k % 12], ad = adjs[Math.floor(k / 12)][n[1]];
+  const name = (ad + " " + n[0]).replace(/^./, m => m.toUpperCase());
+  const pool = allShapes.slice(), shapes = [];
+  while(shapes.length < 4) shapes.push(pool.splice(Math.floor(r() * pool.length), 1)[0]);
+  return dark
+    ? [name, c(h,40,12), c(h,100,95), c(h,90,76), c(h,40,28), c(h+150,80,70), shapes, c(h,35,20), fxs[day % 6]]
+    : [name, c(h,90,94), c(h,50,22), c(h,90,72), c(h+25,90,86), c(h+140+r()*40,85,80), shapes, undefined, fxs[day % 6]];
+}
+
+// Фоновые эффекты на canvas
+const fx = $("fx"), cx = fx.getContext("2d"), reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let W = 0, HH = 0, parts = [], mode = "", cols = [], raf = 0, tick = 0;
+function size(){ const d = devicePixelRatio || 1; W = innerWidth; HH = innerHeight; fx.width = W * d; fx.height = HH * d; cx.setTransform(d,0,0,d,0,0); }
+addEventListener("resize", size); size();
+const rnd = (a, b) => a + Math.random() * (b - a);
+function spawn(){ return {x:rnd(0,W), y:mode === "bubbles" ? HH + 20 : -20, s:rnd(8,20), v:rnd(.6,1.8), ph:rnd(0,6.28), rot:rnd(0,6.28), c:cols[Math.floor(rnd(0,3))]}; }
+function setFx(m, c){
+  mode = m; cols = c; parts = []; cancelAnimationFrame(raf); cx.clearRect(0,0,W,HH);
+  if(reduce) return;
+  if(m === "stars") for(let i = 0; i < 30; i++) parts.push({x:rnd(0,W), y:rnd(0,HH), s:rnd(8,18), ph:rnd(0,6.28), c:cols[i % 3]});
+  else if(m !== "fireworks") for(let i = 0; i < 34; i++){ const p = spawn(); p.y = rnd(0,HH); parts.push(p); }
+  loop();
+}
+function loop(){
+  raf = requestAnimationFrame(loop); tick++; cx.clearRect(0,0,W,HH);
+  if(mode === "fireworks"){
+    if(tick % 55 === 1){ const x = rnd(W*.15,W*.85), y = rnd(HH*.12,HH*.5), c = cols[Math.floor(rnd(0,3))];
+      for(let i = 0; i < 38; i++){ const a = i / 38 * 6.283, sp = rnd(1.5,4.2); parts.push({x, y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, l:1, c}); } }
+    parts = parts.filter(p => p.l > 0);
+    for(const p of parts){ p.x += p.vx; p.y += p.vy; p.vy += .05; p.vx *= .985; p.l -= .012;
+      cx.globalAlpha = Math.max(p.l,0); cx.fillStyle = p.c; cx.beginPath(); cx.arc(p.x,p.y,2.6,0,6.283); cx.fill(); }
+  } else for(const p of parts){
+    cx.save(); cx.globalAlpha = .85; cx.fillStyle = cx.strokeStyle = p.c;
+    if(mode === "stars"){ cx.globalAlpha = .25 + .6 * Math.abs(Math.sin(tick / 50 + p.ph)); cx.font = p.s + "px sans-serif"; cx.fillText("✦",p.x,p.y); cx.restore(); continue; }
+    p.ph += .03; p.rot += .02;
+    if(mode === "bubbles"){ p.y -= p.v; p.x += Math.sin(p.ph) * .5; cx.lineWidth = 2; cx.beginPath(); cx.arc(p.x,p.y,p.s,0,6.283); cx.stroke(); if(p.y < -30) Object.assign(p, spawn()); }
+    else { p.y += p.v; p.x += Math.sin(p.ph) * .8; cx.translate(p.x,p.y); cx.rotate(p.rot);
+      if(mode === "hearts"){ cx.font = p.s * 1.6 + "px sans-serif"; cx.fillText("♥",0,0); }
+      else if(mode === "confetti") cx.fillRect(-p.s/4,-p.s/2,p.s/2,p.s);
+      else { cx.beginPath(); cx.ellipse(0,0,p.s/2,p.s/4,0,0,6.283); cx.fill(); }
+      if(p.y > HH + 30) Object.assign(p, spawn()); }
+    cx.restore();
+  }
+  cx.globalAlpha = 1;
+}
+
+const styleList = [["auto","Стиль дня"],["classic","Классика"],["glass","Стекло"],["soft","Мягкий"],["pixel","Пиксель"],["comic","Комикс"],["note","Тетрадь"]];
+let sty = "auto";
+try { const s = localStorage.getItem("cd-style"); if(styleList.some(x => x[0] === s)) sty = s; } catch(e){}
+let chosen = "auto";
+try { const v = localStorage.getItem("cd-theme"); if(v !== null && v !== "auto" && themes[+v]) chosen = +v; } catch(e){}
+let lastKey = "";
+
+function applyTheme(force){
+  const left = Math.max(0, Math.ceil((target - Date.now()) / 864e5));
+  const key = left + "|" + chosen + "|" + sty;
+  if(!force && key === lastKey) return;
+  lastKey = key;
+  const t = chosen === "auto" ? (left === 67 ? themes[0] : gen(left)) : themes[chosen], r = document.documentElement.style;
+  r.setProperty("--bg", t[1]); r.setProperty("--ink", t[2]);
+  r.setProperty("--a1", t[3]); r.setProperty("--a2", t[4]); r.setProperty("--a3", t[5]);
+  r.setProperty("--paper", t[7] || "#fffdfd");
+  document.body.style.color = t[2];
+  document.body.classList.toggle("obs", t[0] === "Obsidian");
+  const curSty = sty === "auto" ? styleList[1 + left % (styleList.length - 1)][0] : sty;
+  styleList.slice(1).forEach(s => document.body.classList.toggle("st-" + s[0], s[0] === curSty));
+  document.body.style.backgroundImage = t[9] || "";
+  const six = t === themes[0], eff = t[8] || fxs[themes.indexOf(t) % 6];
+  document.body.classList.toggle("six", six);
+  $("title").textContent = six ? "SIX SEVEN" : "16";
+  $("title").classList.toggle("long", six);
+  $("theme").textContent = six ? "Тема: SIX SEVEN. Почему? Никто не знает" : (chosen === "auto" ? "Тема дня: " : "Тема: ") + t[0] + " · " + fxn[eff];
+  $("sub").textContent = six ? "до дня рождения осталось… SIX SEVEN 💀" : "до дня рождения осталось";
+  $("dots").innerHTML = dots(t);
+  $("stickers").innerHTML = spots.map((p, i) =>
+    `<svg class="st" style="--x:${p[0]};--y:${p[1]};--s:${p[2]};--r:${p[3]};--d:${p[4]};color:${t[3 + i % 3]}"><use href="#${t[6][i % 4]}"/></svg>`).join("");
+  // слово дня и бегущая строка: каждый день с нового места
+  const n = words.length, w0 = left % n;
+  $("word").textContent = words[w0];
+  const line = Array.from({length: n}, (_, i) => `<span>${words[(w0 + i) % n]}</span>♡`).join("");
+  $("roll").innerHTML = line + line;
+  setFx(eff, [t[3], t[4], t[5]]);
+  document.querySelectorAll("#opts .opt").forEach(b => b.classList.toggle("on", b.dataset.i === String(chosen)));
+  document.querySelectorAll("#styleOpts .opt").forEach(b => b.classList.toggle("on", b.dataset.s === sty));
+}
+
+function choose(v){
+  chosen = v;
+  try { localStorage.setItem("cd-theme", String(v)); } catch(e){}
+  applyTheme(true);
+  $("panel").classList.remove("open");
+}
+$("opts").innerHTML = '<button class="opt" type="button" data-i="auto"><span class="dots"><i style="background:var(--a1)"></i><i style="background:var(--a2)"></i><i style="background:var(--a3)"></i></span>Тема дня</button>' +
+  themes.map((t, i) => `<button class="opt" type="button" data-i="${i}"><span class="dots">${dots(t)}</span>${t[0]}</button>`).join("");
+$("opts").addEventListener("click", e => { const b = e.target.closest(".opt"); if(b) choose(b.dataset.i === "auto" ? "auto" : +b.dataset.i); });
+$("pick").onclick = () => $("panel").classList.add("open");
+$("panel").addEventListener("click", e => { if(e.target === $("panel")) $("panel").classList.remove("open"); });
+document.addEventListener("keydown", e => { if(e.key === "Escape"){ $("panel").classList.remove("open"); closeBeat(); } });
+
+function update(){
+  const diff = Math.max(0, target - Date.now());
+  if(diff <= 0){
+    $("grid").innerHTML = '<div class="tile done">С днём рождения!</div>';
+    $("sub").textContent = "16 — только начало новой главы";
+    return;
+  }
+  let s = Math.floor(diff / 1000);
+  const d = Math.floor(s / 86400); s %= 86400;
+  const h = Math.floor(s / 3600); s %= 3600;
+  const m = Math.floor(s / 60); s %= 60;
+  const p = (n, l = 2) => String(n).padStart(l, "0");
+  $("d").textContent = p(d, 3); $("h").textContent = p(h); $("m").textContent = p(m); $("s").textContent = p(s);
+  $("ld").textContent = plural(d, ["день","дня","дней"]);
+  $("lh").textContent = plural(h, ["час","часа","часов"]);
+  $("lm").textContent = plural(m, ["минута","минуты","минут"]);
+  $("ls").textContent = plural(s, ["секунда","секунды","секунд"]);
+}
+// ===== Выбор стиля =====
+$("styleOpts").innerHTML = styleList.map(s => `<button class="opt" type="button" data-s="${s[0]}">${s[1]}</button>`).join("");
+$("styleOpts").addEventListener("click", e => { const b = e.target.closest(".opt"); if(b) chooseStyle(b.dataset.s); });
+function chooseStyle(v){
+  sty = v;
+  try { localStorage.setItem("cd-style", v); } catch(e){}
+  applyTheme(true);
+  $("panel").classList.remove("open");
+}
+
+// ===== Бит-секвенсор =====
+function pop(x, y, text){
+  const el = document.createElement("div");
+  el.className = "pop"; el.textContent = text;
+  el.style.left = x + "px"; el.style.top = y + "px";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 900);
+}
+
+const NR = 13;
+const ROWS = [["Кик","d"],["Снэр","d"],["Хэт","d"],["Откр","d"],["Клэп","d"],["Том","d"],["Бас","b"],["","m"],["","m"],["","m"],["","m"],["","m"],["","m"]];
+const NN = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+const SCALES = {"Мажорная пентатоника":[0,2,4,7,9],"Минорная пентатоника":[0,3,5,7,10],"Мажор":[0,2,4,5,7,9,11],"Минор":[0,2,3,5,7,8,10],"Блюз":[0,3,5,6,7,10]};
+const LEADS = {sine:"Синус", triangle:"Мягкий", sawtooth:"Пила", square:"8-бит", bell:"Колокольчик", pad:"Пад"};
+const KITS = {
+  "Классика": {k:[160,42,.12,.35,"sine"], sn:[1800,.18,190], hat:[7500,.05], oh:[7000,.25], clap:1600, tom:[150,90], bass:"sawtooth", lead:"triangle"},
+  "808": {k:[120,32,.22,.7,"sine"], sn:[2200,.25,170], hat:[9000,.04], oh:[8500,.35], clap:1400, tom:[110,60], bass:"sine", lead:"sine"},
+  "Лоуфай": {k:[130,45,.1,.3,"triangle"], sn:[900,.22,200], hat:[4500,.06], oh:[4000,.28], clap:1100, tom:[130,80], bass:"triangle", lead:"pad"},
+  "8-бит": {k:[180,50,.08,.2,"square"], sn:[3000,.1,230], hat:[10000,.03], oh:[9000,.12], clap:2500, tom:[200,120], bass:"square", lead:"square"}
+};
+// x — обычная нота, X — акцент. Строки: кик, снэр, хэт, откр. хэт, клэп, том, бас, затем 6 нот мелодии сверху вниз
+const PRESETS = {
+  "Хаус": {bpm:124, swing:0, kit:"Классика", lead:"triangle", root:9, scale:"Минорная пентатоника", p:["X...x...x...x...","................","x.x.x.x.x.x.x.x.","..x...x...x...x.","....x.......x...","................","x..x..x.x..x..x.","................","......x.........","..x.......x.....","........x.....x.","x...........x...","................"]},
+  "Хип-хоп": {bpm:88, swing:.25, kit:"808", lead:"sine", root:0, scale:"Минорная пентатоника", p:["X.....x...x.....","....x.......x...","x.x.x.x.x.x.x.x.","..............x.","................","............x...","x.....x...x.....","................","......x.........","..x.......x.....","............x...","x.......x.......","................"]},
+  "Лоуфай": {bpm:76, swing:.4, kit:"Лоуфай", lead:"pad", root:5, scale:"Мажорная пентатоника", p:["X.......x.x.....","....x.......x...","x.x.x.x.x.x.x.x.","................","................","................","x.......x.......","................","........x.......","..x.........x...","......x.......x.","x.......x.......","................"]},
+  "Драм-н-бейс": {bpm:170, swing:0, kit:"Классика", lead:"sawtooth", root:2, scale:"Минор", p:["X.........x.....","....x.......x...","x.x.x.x.x.x.x.x.","..............x.","................","................","x.....x.....x...","................","................","..x.......x.....","................","......x.........","................"]},
+  "8-бит": {bpm:140, swing:0, kit:"8-бит", lead:"square", root:0, scale:"Мажор", p:["X...x...x...x...","....x.......x...","x.x.x.x.x.x.x.x.","................","................","..............x.","x.x.x.x.x.x.x.x.","x.......x.......","..x.......x.....","....x.......x...","......x.......x.","................","................"]}
+};
+
+const emptyPat = () => Array.from({length:NR}, () => Array(16).fill(0));
+const parseP = rows => { const p = emptyPat(); rows.forEach((s, r) => { if(r < NR) for(let i = 0; i < 16; i++) p[r][i] = s[i] === "X" ? 2 : s[i] === "x" ? 1 : 0; }); return p; };
+const num = (x, d) => { x = +x; return isNaN(x) ? d : Math.min(100, Math.max(0, x)); };
+const enc = p => p.map(r => r.join(""));
+const dec = rows => rows.map(s => Array.from({length:16}, (_, i) => +s[i] || 0));
+
+const S = {
+  slots: [parseP(PRESETS["Хаус"].p), emptyPat(), emptyPat(), emptyPat()], cur: 0,
+  bpm: 124, swing: 0, kit: "Классика", lead: "triangle", root: 9, scale: "Минорная пентатоника",
+  fx: {echo:25, reverb:20, filter:100}, vol: {d:90, b:90, m:80}, mute: Array(NR).fill(false), chain: false
+};
+const P = () => S.slots[S.cur];
+const K = () => KITS[S.kit];
+
+function pack(){
+  return {slots:S.slots.map(enc), cur:S.cur, bpm:S.bpm, swing:S.swing, kit:S.kit, lead:S.lead, root:S.root, scale:S.scale, fx:S.fx, vol:S.vol, mute:S.mute, chain:S.chain};
+}
+function unpack(j){
+  if(!j || !Array.isArray(j.slots) || j.slots.length !== 4 || !j.slots.every(s => Array.isArray(s) && s.length === NR && s.every(r => typeof r === "string"))) return false;
+  S.slots = j.slots.map(dec);
+  S.cur = Math.min(3, Math.max(0, +j.cur || 0));
+  S.bpm = Math.min(180, Math.max(60, +j.bpm || 100));
+  S.swing = Math.min(.6, Math.max(0, +j.swing || 0));
+  S.kit = KITS[j.kit] ? j.kit : "Классика";
+  S.lead = LEADS[j.lead] ? j.lead : "triangle";
+  S.root = Math.min(11, Math.max(0, Math.round(+j.root || 0)));
+  S.scale = SCALES[j.scale] ? j.scale : "Минорная пентатоника";
+  const f = j.fx || {}, v = j.vol || {};
+  S.fx = {echo:num(f.echo, 25), reverb:num(f.reverb, 20), filter:num(f.filter, 100)};
+  S.vol = {d:num(v.d, 90), b:num(v.b, 90), m:num(v.m, 80)};
+  S.mute = Array.isArray(j.mute) && j.mute.length === NR ? j.mute.map(Boolean) : Array(NR).fill(false);
+  S.chain = !!j.chain;
+  return true;
+}
+try { unpack(JSON.parse(localStorage.getItem("cd-beat2") || "null")); } catch(e){}
+function saveBeat(){ try { localStorage.setItem("cd-beat2", JSON.stringify(pack())); } catch(e){} }
+
+// --- звук ---
+let ac = null, master, filt, comp, recDest, busD, busB, busM, delayN, dg, revWet, noiseBuf;
+function audio(){
+  if(ac){ if(ac.state === "suspended") ac.resume(); return ac; }
+  ac = new (window.AudioContext || window.webkitAudioContext)();
+  master = ac.createGain();
+  filt = ac.createBiquadFilter(); filt.type = "lowpass"; filt.Q.value = .7;
+  comp = ac.createDynamicsCompressor();
+  master.connect(filt); filt.connect(comp); comp.connect(ac.destination);
+  recDest = ac.createMediaStreamDestination(); comp.connect(recDest);
+  busD = ac.createGain(); busB = ac.createGain(); busM = ac.createGain();
+  busD.connect(master); busB.connect(master); busM.connect(master);
+  const conv = ac.createConvolver(), len = Math.floor(ac.sampleRate * 1.8), ib = ac.createBuffer(2, len, ac.sampleRate);
+  for(let c = 0; c < 2; c++){ const d = ib.getChannelData(c); for(let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.5); }
+  conv.buffer = ib; revWet = ac.createGain(); master.connect(conv); conv.connect(revWet); revWet.connect(filt);
+  delayN = ac.createDelay(2); const fb = ac.createGain(); fb.gain.value = .38; dg = ac.createGain();
+  delayN.connect(fb); fb.connect(delayN); delayN.connect(dg); dg.connect(master);
+  noiseBuf = ac.createBuffer(1, ac.sampleRate, ac.sampleRate);
+  const nd = noiseBuf.getChannelData(0); for(let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+  master.gain.value = .8;
+  fxApply();
+  return ac;
+}
+function fxApply(){
+  if(!ac) return;
+  const T = ac.currentTime;
+  filt.frequency.setTargetAtTime(200 * Math.pow(90, S.fx.filter / 100), T, .03);
+  revWet.gain.setTargetAtTime(S.fx.reverb / 100 * .9, T, .03);
+  dg.gain.setTargetAtTime(S.fx.echo / 100 * .7, T, .03);
+  delayN.delayTime.setTargetAtTime(60 / S.bpm * .75, T, .05);
+  busD.gain.setTargetAtTime(S.vol.d / 100, T, .03);
+  busB.gain.setTargetAtTime(S.vol.b / 100, T, .03);
+  busM.gain.setTargetAtTime(S.vol.m / 100, T, .03);
+}
+function noise(t, dur, type, freq, vol, dest){
+  const s = ac.createBufferSource(); s.buffer = noiseBuf;
+  const f = ac.createBiquadFilter(); f.type = type; f.frequency.value = freq;
+  const g = ac.createGain(); g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t + dur);
+  s.connect(f); f.connect(g); g.connect(dest); s.start(t); s.stop(t + dur + .02);
+}
+function tone(t, freq, dur, type, vol, dest, send, lp){
+  if(type === "square" || type === "sawtooth") vol *= .55;
+  const o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.value = freq;
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(vol, .0002), t + .005); g.gain.exponentialRampToValueAtTime(.001, t + dur);
+  let n = o;
+  if(lp){ const f = ac.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = lp; o.connect(f); n = f; }
+  n.connect(g); g.connect(dest); if(send) g.connect(delayN);
+  o.start(t); o.stop(t + dur + .02);
+}
+function sweep(t, f0, f1, dec, dur, type, vol, dest){
+  const o = ac.createOscillator(), g = ac.createGain(); o.type = type;
+  o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dec);
+  g.gain.setValueAtTime(vol * (type === "square" ? .45 : 1), t); g.gain.exponentialRampToValueAtTime(.001, t + dur);
+  o.connect(g); g.connect(dest); o.start(t); o.stop(t + dur + .05);
+}
+const semis = deg => { const sc = SCALES[S.scale], n = sc.length; return S.root + sc[deg % n] + 12 * Math.floor(deg / n); };
+const noteF = deg => 523.25 * Math.pow(2, semis(deg) / 12);
+const bassF = () => 65.41 * Math.pow(2, S.root / 12);
+const noteName = deg => { const s = semis(deg); return NN[s % 12] + (5 + Math.floor(s / 12)); };
+
+function lead(t, f, vol){
+  const type = S.lead;
+  if(type === "bell"){
+    const c = ac.createOscillator(), m = ac.createOscillator(), mg = ac.createGain(), g = ac.createGain();
+    c.frequency.value = f; m.frequency.value = f * 3.5;
+    mg.gain.setValueAtTime(f * 1.5, t); mg.gain.exponentialRampToValueAtTime(1, t + .5);
+    m.connect(mg); mg.connect(c.frequency);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(vol, .0002), t + .003); g.gain.exponentialRampToValueAtTime(.001, t + .9);
+    c.connect(g); g.connect(busM); g.connect(delayN);
+    c.start(t); m.start(t); c.stop(t + .95); m.stop(t + .95);
+  } else if(type === "pad"){
+    for(const d of [-7, 7]){
+      const o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+      o.type = "sawtooth"; o.frequency.value = f; o.detune.value = d; lp.type = "lowpass"; lp.frequency.value = 1400;
+      g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(vol * .5, t + .08); g.gain.exponentialRampToValueAtTime(.001, t + .7);
+      o.connect(lp); lp.connect(g); g.connect(busM); g.connect(delayN); o.start(t); o.stop(t + .75);
+    }
+  } else {
+    const hard = type === "square" || type === "sawtooth";
+    tone(t, f, hard ? .28 : .45, type, vol, busM, true, type === "sawtooth" ? 2500 : 0);
+  }
+}
+function play(r, t, v){
+  const k = K();
+  if(r === 0) sweep(t, k.k[0], k.k[1], k.k[2], k.k[3], k.k[4], v, busD);
+  else if(r === 1){ noise(t, k.sn[1], "highpass", k.sn[0], .7 * v, busD); tone(t, k.sn[2], .1, "triangle", .5 * v, busD, false, 0); }
+  else if(r === 2) noise(t, k.hat[1], "highpass", k.hat[0], .35 * v, busD);
+  else if(r === 3) noise(t, k.oh[1], "highpass", k.oh[0], .3 * v, busD);
+  else if(r === 4){ for(let i = 0; i < 3; i++) noise(t + i * .012, .04, "bandpass", k.clap, .6 * v, busD); noise(t + .036, .16, "bandpass", k.clap, .5 * v, busD); }
+  else if(r === 5) sweep(t, k.tom[0], k.tom[1], .18, .3, "sine", .8 * v, busD);
+  else if(r === 6) tone(t, bassF(), .28, k.bass, .55 * v, busB, false, 420);
+  else lead(t, noteF(12 - r), .3 * v);
+}
+
+// --- сетка ---
+const cells = [], rowEls = [], lbls = [];
+let paint = null, accMode = false;
+function labels(){ for(let r = 7; r < NR; r++) lbls[r].textContent = noteName(12 - r); }
+function syncUI(){
+  $("bpm").value = S.bpm; $("bpmv").textContent = S.bpm; $("swing").value = Math.round(S.swing * 100);
+  $("kit").value = S.kit; $("lead").value = S.lead; $("root").value = S.root; $("scale").value = S.scale;
+  ["echo","reverb","filter"].forEach(k => $("fx_" + k).value = S.fx[k]);
+  ["d","b","m"].forEach(k => $("v_" + k).value = S.vol[k]);
+  document.querySelectorAll("#bslots [data-s]").forEach(b => b.classList.toggle("on", +b.dataset.s === S.cur));
+  $("bchain").classList.toggle("on", S.chain);
+  $("bm1").classList.toggle("on", !accMode); $("bm2").classList.toggle("on", accMode);
+  labels();
+}
+function paintAll(){
+  P().forEach((row, r) => row.forEach((v, s) => { const c = cells[r][s]; c.classList.toggle("on", v > 0); c.classList.toggle("acc", v > 1); }));
+  S.mute.forEach((m, r) => rowEls[r].classList.toggle("mute", m));
+  syncUI();
+}
+function opts(sel, items){ $(sel).innerHTML = items.map(([v, t]) => `<option value="${v}">${t}</option>`).join(""); }
+function buildBeat(){
+  const box = $("brows"); box.innerHTML = "";
+  ROWS.forEach((n, r) => {
+    const row = document.createElement("div"); row.className = "brow r-" + n[1]; rowEls[r] = row;
+    const lb = document.createElement("button"); lb.type = "button"; lb.className = "blbl"; lb.dataset.m = r; lb.textContent = n[0]; lbls[r] = lb;
+    row.appendChild(lb);
+    cells[r] = [];
+    for(let s = 0; s < 16; s++){
+      const c = document.createElement("button"); c.type = "button";
+      c.className = "cell" + (s % 4 === 0 && s ? " b4" : "");
+      c.dataset.r = r; c.dataset.s = s; c.setAttribute("aria-label", (n[0] || "Нота") + " " + (s + 1));
+      row.appendChild(c); cells[r][s] = c;
+    }
+    box.appendChild(row);
+  });
+  opts("kit", Object.keys(KITS).map(k => [k, k]));
+  opts("lead", Object.keys(LEADS).map(k => [k, LEADS[k]]));
+  opts("root", NN.map((n, i) => [i, n]));
+  opts("scale", Object.keys(SCALES).map(k => [k, k]));
+  $("bpre").innerHTML = Object.keys(PRESETS).map(k => `<button class="hb" type="button" data-p="${k}">${k}</button>`).join("");
+  paintAll();
+}
+function setCell(r, s, v){
+  const p = P();
+  if(p[r][s] === v) return;
+  p[r][s] = v;
+  cells[r][s].classList.toggle("on", v > 0); cells[r][s].classList.toggle("acc", v > 1);
+  if(v){ audio(); play(r, ac.currentTime + .01, v > 1 ? 1.2 : .8); }
+}
+$("brows").addEventListener("pointerdown", e => {
+  const c = e.target.closest(".cell"); if(!c) return;
+  e.preventDefault();
+  const r = +c.dataset.r, s = +c.dataset.s, want = accMode ? 2 : 1;
+  paint = P()[r][s] === want ? 0 : want; setCell(r, s, paint);
+});
+$("brows").addEventListener("pointermove", e => {
+  if(paint === null) return;
+  const el = document.elementFromPoint(e.clientX, e.clientY), c = el && el.closest ? el.closest(".cell") : null;
+  if(c) setCell(+c.dataset.r, +c.dataset.s, paint);
+});
+$("brows").addEventListener("click", e => {
+  const b = e.target.closest(".blbl"); if(!b) return;
+  const r = +b.dataset.m; S.mute[r] = !S.mute[r]; rowEls[r].classList.toggle("mute", S.mute[r]); saveBeat();
+});
+const endPaint = () => { if(paint !== null){ paint = null; saveBeat(); } };
+addEventListener("pointerup", endPaint); addEventListener("pointercancel", endPaint);
+
+// --- воспроизведение ---
+let playing = false, step = 0, nextT = 0, queue = [], timer = 0, uiRaf = 0, curStep = -1;
+const stepDur = () => 60 / S.bpm / 4;
+function setCur(s){
+  if(curStep >= 0) for(let r = 0; r < NR; r++) cells[r][curStep].classList.remove("cur");
+  curStep = s;
+  if(s >= 0) for(let r = 0; r < NR; r++) cells[r][s].classList.add("cur");
+}
+function onLoop(){
+  if(!S.chain) return;
+  for(let k = 1; k <= 4; k++){
+    const n = (S.cur + k) % 4;
+    if(S.slots[n].some(r => r.some(Boolean))){ if(n !== S.cur){ S.cur = n; paintAll(); } break; }
+  }
+}
+function schedule(){
+  while(nextT < ac.currentTime + .12){
+    const t = nextT + (step % 2 === 1 ? S.swing * stepDur() : 0), p = P();
+    for(let r = 0; r < NR; r++){ const v = p[r][step]; if(v && !S.mute[r]) play(r, t, v > 1 ? 1.2 : .8); }
+    queue.push({step, t});
+    nextT += stepDur();
+    step = (step + 1) % 16;
+    if(step === 0) onLoop();
+  }
+}
+function ui(){
+  if(!playing) return;
+  while(queue.length && queue[0].t <= ac.currentTime) setCur(queue.shift().step);
+  uiRaf = requestAnimationFrame(ui);
+}
+function startBeat(){
+  audio(); fxApply(); playing = true; step = 0; queue = [];
+  nextT = ac.currentTime + .08; timer = setInterval(schedule, 25); uiRaf = requestAnimationFrame(ui);
+  $("bplay").textContent = "■ Стоп";
+}
+function stopBeat(){
+  playing = false; clearInterval(timer); cancelAnimationFrame(uiRaf); queue = [];
+  if(cells.length) setCur(-1);
+  $("bplay").textContent = "▶ Играть";
+}
+function preview(){ audio(); lead(ac.currentTime + .01, noteF(2), .3); }
+
+// --- запись ---
+let recorder = null, chunks = [];
+function toggleRec(){
+  if(recorder){ recorder.stop(); return; }
+  if(!window.MediaRecorder){ alert("Запись не поддерживается в этом браузере"); return; }
+  audio();
+  const types = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"];
+  const mt = types.find(t => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) || "";
+  recorder = new MediaRecorder(recDest.stream, mt ? {mimeType:mt} : undefined); chunks = [];
+  recorder.ondataavailable = e => { if(e.data.size) chunks.push(e.data); };
+  recorder.onstop = () => {
+    const type = (recorder && recorder.mimeType) || mt || "audio/webm";
+    const blob = new Blob(chunks, {type}), a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "beat." + (type.includes("mp4") ? "m4a" : "webm");
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    recorder = null; $("brec").classList.remove("recording"); $("brec").textContent = "⏺ Запись";
+  };
+  recorder.start(); $("brec").classList.add("recording"); $("brec").textContent = "⏹ Сохранить";
+  if(!playing) startBeat();
+}
+
+// --- управление ---
+function openBeat(){ if(!cells.length) buildBeat(); $("beat").classList.add("open"); }
+function closeBeat(){ if(recorder) recorder.stop(); stopBeat(); $("beat").classList.remove("open"); }
+function applyPreset(k){
+  const p = PRESETS[k];
+  S.slots[S.cur] = parseP(p.p); S.bpm = p.bpm; S.swing = p.swing; S.kit = p.kit; S.lead = p.lead; S.root = p.root; S.scale = p.scale;
+  paintAll(); fxApply(); saveBeat();
+}
+function randomBeat(){
+  const pr = [s => s % 4 === 0 ? .85 : .1, s => s === 4 || s === 12 ? .85 : .05, s => s % 2 === 0 ? .8 : .3, s => s % 4 === 2 ? .25 : .03,
+    s => s === 4 || s === 12 ? .5 : .04, () => .05, () => .25, () => .08, () => .1, () => .1, () => .1, () => .1, () => .08];
+  S.slots[S.cur] = pr.map(f => Array.from({length:16}, (_, s) => Math.random() < f(s) ? (Math.random() < .15 ? 2 : 1) : 0));
+  paintAll(); saveBeat();
+}
+let taps = [];
+function tapTempo(){
+  const now = performance.now();
+  if(taps.length && now - taps[taps.length - 1] > 2000) taps = [];
+  taps.push(now); taps = taps.slice(-5);
+  if(taps.length >= 2){
+    const avg = (taps[taps.length - 1] - taps[0]) / (taps.length - 1);
+    S.bpm = Math.min(180, Math.max(60, Math.round(60000 / avg))); syncUI(); fxApply(); saveBeat();
+  }
+}
+const toCode = () => btoa(unescape(encodeURIComponent(JSON.stringify(pack()))));
+function copyCode(){
+  const code = toCode();
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(() => pop(innerWidth / 2 - 60, 90, "Код скопирован"), () => prompt("Скопируй код:", code));
+  else prompt("Скопируй код:", code);
+}
+function pasteCode(){
+  const code = prompt("Вставь код бита:"); if(!code) return;
+  try {
+    if(!unpack(JSON.parse(decodeURIComponent(escape(atob(code.trim())))))) throw 0;
+    paintAll(); fxApply(); saveBeat(); pop(innerWidth / 2 - 60, 90, "Бит загружен");
+  } catch(e){ alert("Не получилось прочитать код"); }
+}
+
+$("bt").onclick = openBeat;
+$("bq").onclick = closeBeat;
+$("bplay").onclick = () => playing ? stopBeat() : startBeat();
+$("brec").onclick = toggleRec;
+$("btap").onclick = tapTempo;
+$("bclear").onclick = () => { S.slots[S.cur] = emptyPat(); paintAll(); saveBeat(); };
+$("brand").onclick = randomBeat;
+$("bm1").onclick = () => { accMode = false; syncUI(); };
+$("bm2").onclick = () => { accMode = true; syncUI(); };
+$("bdup").onclick = () => { const n = (S.cur + 1) % 4; S.slots[n] = P().map(r => r.slice()); S.cur = n; paintAll(); saveBeat(); };
+$("bchain").onclick = () => { S.chain = !S.chain; syncUI(); saveBeat(); };
+$("bslots").addEventListener("click", e => { const b = e.target.closest("[data-s]"); if(b){ S.cur = +b.dataset.s; paintAll(); saveBeat(); } });
+$("bpre").addEventListener("click", e => { const b = e.target.closest("[data-p]"); if(b) applyPreset(b.dataset.p); });
+$("bpm").oninput = e => { S.bpm = +e.target.value; $("bpmv").textContent = S.bpm; fxApply(); saveBeat(); };
+$("swing").oninput = e => { S.swing = +e.target.value / 100; saveBeat(); };
+$("kit").onchange = e => { S.kit = e.target.value; S.lead = KITS[S.kit].lead; syncUI(); saveBeat(); audio(); play(0, ac.currentTime + .01, .8); play(1, ac.currentTime + .25, .8); };
+$("lead").onchange = e => { S.lead = e.target.value; saveBeat(); preview(); };
+$("root").onchange = e => { S.root = +e.target.value; labels(); saveBeat(); preview(); };
+$("scale").onchange = e => { S.scale = e.target.value; labels(); saveBeat(); preview(); };
+["echo","reverb","filter"].forEach(k => $("fx_" + k).oninput = e => { S.fx[k] = +e.target.value; fxApply(); saveBeat(); });
+["d","b","m"].forEach(k => $("v_" + k).oninput = e => { S.vol[k] = +e.target.value; fxApply(); saveBeat(); });
+$("bcopy").onclick = copyCode;
+$("bpaste").onclick = pasteCode;
+
+applyTheme(true); update();
+setInterval(() => { applyTheme(); update(); }, 1000);
+</script>
+</body>
+</html>
